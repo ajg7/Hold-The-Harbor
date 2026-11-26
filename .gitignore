@@ -1,0 +1,53 @@
+# --- CMake build output (presets build into build/<preset>) ---
+build/
+out/
+cmake-build-*/
+CMakeUserPresets.json
+CMakeCache.txt
+CMakeFiles/
+compile_commands.json
+Testing/
+
+# --- Visual Studio / MSVC ---
+.vs/
+*.user
+*.suo
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.opendb
+*.ipch
+*.pdb
+*.ilk
+*.idb
+*.obj
+*.exp
+*.lib
+*.exe
+*.dll
+*.diagsession
+*.vspx
+
+# --- Other editors / tools ---
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/extensions.json
+.idea/
+.cache/
+*.swp
+*~
+
+# --- OS junk ---
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# --- Claude Code: per-machine settings ---
+.claude/settings.local.json
+
+# --- Downloaded asset packs (keep extracted assets/, ignore the raw zips) ---
+*.zip
+*.rar
+*.7z

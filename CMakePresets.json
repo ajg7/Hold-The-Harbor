@@ -1,0 +1,27 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": { "major": 3, "minor": 28, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "vs2026",
+      "displayName": "Visual Studio 2026 (x64)",
+      "generator": "Visual Studio 18 2026",
+      "architecture": "x64",
+      "binaryDir": "${sourceDir}/build/${presetName}"
+    },
+    {
+      "name": "vs2026-asan",
+      "displayName": "Visual Studio 2026 (x64) + AddressSanitizer",
+      "inherits": "vs2026",
+      "cacheVariables": { "HTH_ENABLE_ASAN": "ON" }
+    }
+  ],
+  "buildPresets": [
+    { "name": "debug",   "configurePreset": "vs2026",      "configuration": "Debug" },
+    { "name": "release", "configurePreset": "vs2026",      "configuration": "Release" },
+    { "name": "asan",    "configurePreset": "vs2026-asan", "configuration": "Debug" }
+  ],
+  "testPresets": [
+    { "name": "debug", "configurePreset": "vs2026", "configuration": "Debug", "output": { "outputOnFailure": true } }
+  ]
+}
