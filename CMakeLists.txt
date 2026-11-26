@@ -74,10 +74,19 @@ file(GLOB_RECURSE HTH_SOURCES CONFIGURE_DEPENDS
     "${CMAKE_SOURCE_DIR}/src/*.cpp")
 list(FILTER HTH_SOURCES EXCLUDE REGEX ".*/src/main\\.cpp$")
 
-add_library(hth_core STATIC ${HTH_SOURCES})
-target_include_directories(hth_core PUBLIC "${CMAKE_SOURCE_DIR}/src")
-target_link_libraries(hth_core PUBLIC raylib nlohmann_json::nlohmann_json hth_options)
-target_compile_definitions(hth_core PUBLIC
+# Until src/ holds more than main.cpp, hth_core has nothing to compile, and an
+# empty STATIC library can't be built. Fall back to INTERFACE so the exe and
+# tests still link. It becomes STATIC once the first .cpp lands.
+if(HTH_SOURCES)
+    add_library(hth_core STATIC ${HTH_SOURCES})
+    set(HTH_CORE_SCOPE PUBLIC)
+else()
+    add_library(hth_core INTERFACE)
+    set(HTH_CORE_SCOPE INTERFACE)
+endif()
+target_include_directories(hth_core ${HTH_CORE_SCOPE} "${CMAKE_SOURCE_DIR}/src")
+target_link_libraries(hth_core ${HTH_CORE_SCOPE} raylib nlohmann_json::nlohmann_json hth_options)
+target_compile_definitions(hth_core ${HTH_CORE_SCOPE}
     HTH_ASSET_DIR="${CMAKE_SOURCE_DIR}/assets")
 
 add_executable(hold_the_harbor src/main.cpp)
